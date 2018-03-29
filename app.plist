@@ -32,7 +32,7 @@
 
                <key>bundle-identifier</key>
 
-               <string>com.myapp</string>
+               <string>com.kf5.sampleApp</string>
 
                <key>bundle-version</key>
 
