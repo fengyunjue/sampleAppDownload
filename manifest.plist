@@ -31,7 +31,7 @@
 				<key>bundle-identifier</key>
 				<string>com.kf5.sampleApp</string>
 				<key>bundle-version</key>
-				<string>2.6.1</string>
+				<string>2.6.3</string>
 				<key>kind</key>
 				<string>software</string>
 				<key>title</key>
