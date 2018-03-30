@@ -2,71 +2,157 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+body,div,span,ul,li,p,input,h1,h2,h3,h4,img,a,title{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  text-decoration: none;
+}
+html,body{ width:100%; }
+body{
+    max-width:640px;
+    overflow-y:scroll;
+    font-family:Helvetica, STHeiti STXihei, Microsoft JhengHei, Microsoft YaHei, Arial;
+    margin:0 auto;
+    font-size:1.4rem;}
+a {
+  color: #0076cc;
+}
+@media (min-width: 375px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 414px) {
+  html {
+    font-size: 14px
+  }
+}
+.header{ padding:0 1.4rem;}
+.header h2{font-size:2.4rem; line-height:2.6rem; color:#4A4A4A; font-weight:bold; display:inline-block; padding:1.6rem 0;
+    width: 100%;
+    text-align: center;}
+.support { text-align: center; font-size:0.8rem; color:#9B9B9B;line-height: 3rem;}
+.header .attention{ font-size:1.5rem; padding-left:1.2rem; position:relative;}
+.header .attention::before{ content:""; position:absolute; width:0.6rem; height:0.6rem; border-radius:50%; background:#ccc; left:0; top:0.4rem;}
+
+/*app列表框*/
+.app_wrapper{ width:100%; position:relative; overflow-x:hidden; }
+.platform_wrapper{ width:100%; height:auto;  box-sizing:border-box; padding:0 1.4rem; border-top:1px solid #ccc; margin-top:1rem; background:#fff; }
+.platform_title {color: #0076cc;}
+.selected_title {color: darkgray;}
+.platform_wrapper>span{ padding:0.6rem 0.6rem;display: flex; display: -webkit-flex; justify-content: space-around; padding-bottom:0; font-size:2rem; position:relative;}
+.platform_wrapper>li{ width:100%; padding-top:0.8rem; padding-bottom:0.8rem; border-bottom:1px solid #ccc;}
+.platform_wrapper .app_info{ padding: 0.5rem 0rem; height:5.4rem;}
+.platform_wrapper img{ float:left; width:5.4rem; height:5.4rem; margin-right:0.8rem; border:1px solid #ccc; border-radius:20%; box-sizing:border-box;}
+
+.info_box{max-width:50%; height: 100%; float:left; padding-top:0.2rem;}
+.info_box span{ color:#aaa; padding-right:0.2rem; font-size:1rem; }
+.platform_wrapper .down_btn{ float:right; width:5rem; height:2.6rem; margin:1.4rem 0; font-size:1.2rem;  border:0.12rem solid #0076cc; border-radius:0.4rem; outline:none;  background:#fff; color:#0076cc; text-align:center; line-height:2.6rem;}
+
+.changelog {display: block;overflow:hidden; text-overflow:ellipsis; }
+</style>
+<script>
+
+    function getJSON (url, callback) {
+
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('get', url);
+
+        xhr.onload = function () {
+
+            var data = xhr.responseText || '';
+
+            try {
+                data = JSON.parse(data);
+            }
+            catch (e) {
+                data = null;
+            }
+
+            callback(data);
+        };
+
+        xhr.send();
+    }
+
+    function getTag(){
+
+        var url = 'https://raw.githubusercontent.com/fengyunjue/sampleAppDownload/master/update.json';
+
+        getJSON(url, function (dict) {
+            document.getElementById('ios-version').innerText = dict.ios.version;
+            document.getElementById('ios-message').innerText = dict.ios.message;
+            document.getElementById('ios-time').innerText = dict.ios.updateTime;
+            
+            document.getElementById('android-version').innerText = dict.android.version;
+            document.getElementById('android-message').innerText = dict.android.message;
+            document.getElementById('android-time').innerText = dict.android.updateTime;
+        });
+    }
+
+</script>
 <title>app下载</title>
 <!--H5页面窗口自动调整到设备宽度，并禁止用户缩放页面-->
 	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
-<!--将网站添加到主屏幕快速启动方式，仅针对ios的safari顶端状态条的样式  -->  
+<!--将网站添加到主屏幕快速启动方式，仅针对ios的safari顶端状态条的样式  -->
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
 <!--忽略将页面中的数字识别为电话号码-->
     <meta content="telephone=no" name="format-detection">
-<!--忽略Android平台中对邮箱地址的识别 -->   
+<!--忽略Android平台中对邮箱地址的识别 -->
     <meta name="format-detection" content="email=no" />
     <!--winphone系统a、input标签被点击时产生的半透明灰色背景怎么去掉-->
     <meta name="msapplication-tap-highlight" content="no">
-    <link rel="stylesheet" href="css/index.css">
-    <script src="js/qrcode.min.js"></script>
-    <script src="js/axios.min.js"></script>
-    <script src="js/vue.min.js"></script>
 </head>
-<body>
+<body onload="getTag();">
 <div class="wrapper">
 	<header class="header">
-    	<h2>KF5SDK测试应用</h2><br>
-        <a class="attention" href="/cer/myCA.cer">如果出现【无法验证服务器身份】或【无法链接到】，请点击链接安装证书</a>
+    	<h2 >KF5 SDK sampleApp</h2><br>
+<!--         <a class="attention" href="/cer/myCA.cer">如果出现【无法验证服务器身份】或【无法链接到】，请点击链接安装证书</a>
         <p>iOS 10.3后 默认不信任安装的证书，需要手动信任。</p>
-        <span>设置 > 通用 > 关于 > 证书信任设置 > 对需要的证书启用完全信任</span>
+        <span>设置 > 通用 > 关于 > 证书信任设置 > 对需要的证书启用完全信任</span> -->
     </header>
     <div class="app_wrapper">
         <div class="platform_wrapper">
-            <span>
-                <span class="platform_title" v-on:click="switchPlatform" v-bind:class="{ selected_title: selected_paltform === 'ios' }">iOS</span>
-                <span class="platform_title" v-on:click="switchPlatform" v-bind:class="{ selected_title: selected_paltform === 'android' }">Android</span>
-            </span>
-            <ul class="app_list">
-                <li v-for="app in apps" :bundle-id="app.bundleID"  v-on:click="viewAllVersion">
+            <ul class="app_list" v-if="has_data">
+                <li v-for="app in apps" :key="app.id">
                     <div class="app_info">
-                        <img :src="app.icon">
+                        <img src="https://raw.githubusercontent.com/fengyunjue/sampleAppDownload/master/app.png">
                         <div class="info_box">
-                            <span class="app_name">{{app.name}}</span>
-                            <span class="version_number">{{app.version}}({{app.build}})</span><br>
-                            <span>更新:</span>
-                            <span class="update_time">{{app.uploadTime}}</span>
-                            <br><span class="changelog">{{app.changelog ? app.changelog : ""}}</span>
+                            <span class="app_name">iOS版 版本号:</span><span class="app_name" id = "ios-version">0.0.0</span>
+                            <br>
+                            <span>更新时间:</span>
+                            <span class="update_time" id="ios-time">时间</span>
+                            <br>
+                            <span class="update_time" id="ios-message">内容</span>
+
                         </div>
-                        <a class="down_btn" :href="app.url">下载</a>
+                        <a class="down_btn" href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/fengyunjue/sampleAppDownload/master/manifest.plist">下载</a>
+                    </div>
+                </li>
+                <li v-for="app in apps" :key="app.id">
+                    <div class="app_info">
+                        <img src="https://raw.githubusercontent.com/fengyunjue/sampleAppDownload/master/app.png">
+                        <div class="info_box">
+                            <span class="app_name">Android版  版本号:</span><span class="app_name" id = "android-version">0.0.0</span>
+                            <br>
+                            <span>更新时间:</span>
+                            <span class="update_time" id="android-time">时间</span>
+                            <br>
+                            <span class="update_time" id="android-message">内容</span>
+                        </div>
+                        <a class="down_btn" href="https://raw.githubusercontent.com/fengyunjue/sampleAppDownload/android/sampleApp.apk">下载</a>
                     </div>
                 </li>
             </ul>
-            <div class="moreAppButton" v-on:click="loadApps" v-if="show_load_more_apps_button"><span>加载更多</span></div>
         </div>
     </div>
-    <div class="qrcode_wrapper">
-        <p class="qrcode_btn" v-on:click="toggleQrcode" v-bind:class="{ open: qrcode_box_show}">二维码</p>
-        <div class="qrcode_box" v-bind:class="{ qrcode_box_show: qrcode_box_show }">
-            <div class="qrcode_pic"></div>
-            <div class="step">
-                <p>微信扫描此页面不能显示，请点击右上角"在safari中打开"</p>
-                <div class="step_detail">
-                    <span>第一步:</span>
-                    <img src="images/step_01.png" alt="">  
-                    <span>第二步:</span>
-                    <img src="images/step_02.png" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
-    <p class="support">网站由<a href="https://github.com/zhao0/ipapk-server">ipapk-server</a>项目支持</p>
+    <p class="support">网站由<a href="https://github.com/fengyunjue/sampleAppDownload">sampleAppDownload</a>项目支持</p>
 </div>
 </body>
-<script src="js/index.js"></script>
+<script src="js/versionlist.js"></script>
 </html>
