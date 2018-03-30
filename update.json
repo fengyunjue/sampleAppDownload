@@ -1,0 +1,12 @@
+{
+	"ios":{
+		"version":"V2.6.3",
+		"updateTime":"2018年03月30日",
+		"message":"更新最新的SDK"
+	},
+	"android":{
+		"version":"V2.6.1",
+		"updateTime":"2018年03月30日",
+		"message":"安卓更新最新的SDK"
+	}
+}
