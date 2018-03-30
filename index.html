@@ -88,11 +88,18 @@ a {
             document.getElementById('ios-version').innerText = dict.ios.version;
             document.getElementById('ios-message').innerText = dict.ios.message;
             document.getElementById('ios-time').innerText = dict.ios.updateTime;
-            
+
             document.getElementById('android-version').innerText = dict.android.version;
             document.getElementById('android-message').innerText = dict.android.message;
             document.getElementById('android-time').innerText = dict.android.updateTime;
+
+            showPage();
         });
+    }
+
+    function showPage () {
+
+        document.body.style.display = 'block';
     }
 
 </script>
@@ -108,7 +115,7 @@ a {
     <!--winphone系统a、input标签被点击时产生的半透明灰色背景怎么去掉-->
     <meta name="msapplication-tap-highlight" content="no">
 </head>
-<body onload="getTag();">
+<body onload="getTag();" style="display: none;">
 <div class="wrapper">
 	<header class="header">
     	<h2 >KF5 SDK sampleApp</h2><br>
